@@ -13,7 +13,6 @@ namespace Domain.Aggregates.OrderAggregate
     public class Order : Entity, IAggregateRoot
     {
         public Guid FlightId { get; private set; }
-        
         public DateTimeOffset OrderDate { get; private set;  } = DateTimeOffset.Now;
         public int NoOfSeats {  get; private set; }
         public string ClassName {  get; private set; }
@@ -38,22 +37,19 @@ namespace Domain.Aggregates.OrderAggregate
             ClassName = className;
         }
 
-        public void AddPassengers(string name, int age, string email)
-        {
-             var passenger = new Passenger(name, age, email);
-            _passengers.Add(passenger);
-        }   
-
-        public void AddOrder(Guid flightId, int noOfSeats, string serviceClass)
+        public void AddOrder(Guid flightId,  string serviceClass, int noOfSeats, Passenger customer, Address customerAddress)
         {
             var bookedFlight = GetFlight(flightId, serviceClass);
-            
+            _flight.Add(bookedFlight);
+            _passengers.Add(customer);
+            Address = customerAddress;
         }
 
         private decimal CalculateRate(decimal rate, int noOfSeats)
         {
             return rate * noOfSeats;
         }
+
         private Flight GetFlight (Guid flightId, string serviceClass)
         {
             var bookedFlight = _flight.SingleOrDefault(f => f.Id == flightId); 

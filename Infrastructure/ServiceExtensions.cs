@@ -5,10 +5,7 @@ namespace Infrastructure
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection AddFlightsContext(
-            this IServiceCollection services,
-            string connectionString,
-            string migrationsAssemblyName)
+        public static IServiceCollection AddFlightsContext(this IServiceCollection services, string connectionString, string migrationsAssemblyName)
         {
             return services.AddDbContext<FlightsContext>(options =>
             {

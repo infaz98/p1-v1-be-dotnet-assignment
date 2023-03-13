@@ -27,13 +27,13 @@ public class FlightSearchQueryHandler : IRequestHandler<FlightSearchQuery, List<
         var flights = await _flightRepository.SearchAsync(request.DestinationAirPortId);
 
         // Get destination (arrival) airport code
-        var destinationAirport = await _airportRepository.GetAsync(request.DestinationAirPortId);
+        var destinationAirport = await GetAirport(request.DestinationAirPortId);
 
         var view = new List<FlightViewModel>();
 
         foreach (var flight in flights)
         {
-            var deptAirport = await _airportRepository.GetAsync(flight.DestinationAirportId);
+            var deptAirport = await GetAirport(flight.DestinationAirportId);
 
             var lowestRate = flight.Rates.Where(n => n.Price.Value != 0).OrderBy(x => x.Price).FirstOrDefault();
 
@@ -49,7 +49,11 @@ public class FlightSearchQueryHandler : IRequestHandler<FlightSearchQuery, List<
             view.Add(searchResult);
         }
 
-
         return view;
+    }
+
+    private async Task<Airport> GetAirport(Guid airportId)
+    {
+        return await _airportRepository.GetAsync(airportId);
     }
 }
