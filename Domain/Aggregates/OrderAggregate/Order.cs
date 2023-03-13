@@ -50,6 +50,16 @@ namespace Domain.Aggregates.OrderAggregate
             return rate * noOfSeats;
         }
 
+        public void OrderPlaced(Guid flightId, string serviceClass, int noOfSeats)
+        {
+            //var bookedFlight = GetFlight(flightId, serviceClass);
+            //bookedFlight.MutateRateAvailability(serviceClass, noOfSeats);
+
+            //Domain Event
+        }
+
+
+
         private Flight GetFlight (Guid flightId, string serviceClass)
         {
             var bookedFlight = _flight.SingleOrDefault(f => f.Id == flightId); 
