@@ -12,6 +12,7 @@ namespace Infrastructure.EntityConfigurations
             base.Configure(builder);
 
             var navigation = builder.Metadata.FindNavigation(nameof(Flight.Rates));
+
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
 
             builder.Property("Arrival").IsRequired();

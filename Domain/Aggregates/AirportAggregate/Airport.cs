@@ -9,9 +9,7 @@ namespace Domain.Aggregates.AirportAggregate
 
         public string Name { get; private set; }
 
-        public Airport()
-        {
-        }
+        public Airport() { }
         
         public Airport(string code, string name) : this()
         {

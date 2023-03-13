@@ -4,7 +4,7 @@ using Domain.Aggregates.AirportAggregate;
 using Domain.SeedWork;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositores
+namespace Infrastructure.Repositories
 {
     public class AirportRepository : IAirportRepository
     {

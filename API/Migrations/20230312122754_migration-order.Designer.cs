@@ -3,15 +3,17 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Migrations
 {
     [DbContext(typeof(FlightsContext))]
-    partial class FlightsContextModelSnapshot : ModelSnapshot
+    [Migration("20230312122754_migration-order")]
+    partial class migrationorder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,6 +131,10 @@ namespace API.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("AddressId")
+                        .IsRequired()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AddressId1")
                         .HasColumnType("uuid");
 
                     b.Property<string>("ClassName")
@@ -149,6 +155,8 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("AddressId1");
 
                     b.HasIndex("PassengerId");
 
@@ -229,9 +237,15 @@ namespace API.Migrations
 
             modelBuilder.Entity("Domain.Aggregates.OrderAggregate.Order", b =>
                 {
+                    b.HasOne("Domain.Aggregates.OrderAggregate.Address", null)
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Aggregates.OrderAggregate.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("AddressId1");
 
                     b.HasOne("Domain.Aggregates.OrderAggregate.Passenger", null)
                         .WithMany()
