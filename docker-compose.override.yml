@@ -6,4 +6,15 @@ services:
       POSTGRES_PASS: secret
       POSTGRES_DBNAME: development
     ports:
-      - "5432:5432"
+        - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  logs: 
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:5341"
+      - "9000:80"
+
+volumes:
+  db_data:

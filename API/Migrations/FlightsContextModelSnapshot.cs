@@ -91,6 +91,41 @@ namespace API.Migrations
                     b.ToTable("FlightRates");
                 });
 
+            modelBuilder.Entity("Domain.Aggregates.OrderAggregate.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ConfirmedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("FlightRateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDraft")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FlightRateId")
+                        .IsUnique();
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("Domain.Aggregates.FlightAggregate.Flight", b =>
                 {
                     b.HasOne("Domain.Aggregates.AirportAggregate.Airport", null)
@@ -132,6 +167,15 @@ namespace API.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("FlightRateId");
                         });
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.OrderAggregate.Order", b =>
+                {
+                    b.HasOne("Domain.Aggregates.FlightAggregate.FlightRate", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.Aggregates.OrderAggregate.Order", "FlightRateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -2,3 +2,6 @@ version: '3.8'
 services:
   database:
     image: kartoza/postgis:12.0
+  logs:
+    image: datalust/seq
+    

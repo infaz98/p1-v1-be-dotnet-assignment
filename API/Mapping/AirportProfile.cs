@@ -9,6 +9,7 @@ namespace API.Mapping
         public AirportProfile()
         {
             CreateMap<Airport, AirportViewModel>();
+
         }
     }
 }
