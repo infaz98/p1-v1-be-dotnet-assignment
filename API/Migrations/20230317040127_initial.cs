@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -117,8 +117,7 @@ namespace API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_FlightRateId",
                 table: "Orders",
-                column: "FlightRateId",
-                unique: true);
+                column: "FlightRateId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

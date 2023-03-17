@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(FlightsContext))]
-    [Migration("20230316203231_Initial")]
-    partial class Initial
+    [Migration("20230317040127_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -122,8 +122,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FlightRateId")
-                        .IsUnique();
+                    b.HasIndex("FlightRateId");
 
                     b.ToTable("Orders");
                 });
@@ -174,8 +173,8 @@ namespace API.Migrations
             modelBuilder.Entity("Domain.Aggregates.OrderAggregate.Order", b =>
                 {
                     b.HasOne("Domain.Aggregates.FlightAggregate.FlightRate", null)
-                        .WithOne()
-                        .HasForeignKey("Domain.Aggregates.OrderAggregate.Order", "FlightRateId")
+                        .WithMany()
+                        .HasForeignKey("FlightRateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -30,7 +30,6 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddApiVersioning(options =>
             {
                 options.AssumeDefaultVersionWhenUnspecified = true;
@@ -45,7 +44,6 @@ namespace API
                     options.SubstituteApiVersionInUrl = true;
                 });
 
-
             services.AddEndpointsApiExplorer();
 
             services.AddControllers()
@@ -55,6 +53,8 @@ namespace API
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddMediatR(typeof(Startup));
+
+            //registering domain assembly for managing domain events 
             services.AddMediatR(typeof(FlightBookingEvent).GetTypeInfo().Assembly);
 
             services.AddOpenApiDocument(d => d.Title = "AcmeFlights API");

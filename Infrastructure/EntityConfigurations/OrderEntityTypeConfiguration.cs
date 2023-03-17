@@ -11,11 +11,10 @@ namespace Infrastructure.EntityConfigurations
             base.Configure(builder);
 
             builder.Property<int>("CustomerId").IsRequired();
-
+           
             builder.HasOne<FlightRate>()
-                .WithOne()
-                .HasForeignKey<Order>(o => o.FlightRateId)
-                .IsRequired();
+                .WithMany()
+                .HasForeignKey(o => o.FlightRateId);
         }
     }
 }

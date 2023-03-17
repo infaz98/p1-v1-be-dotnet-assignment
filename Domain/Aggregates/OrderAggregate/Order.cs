@@ -41,6 +41,7 @@ namespace Domain.Aggregates.OrderAggregate
             IsDraft = true;
         }
 
+        //Not allow to update if already order is confirmed 
         public void Confirm()
         {
             if (!IsDraft)

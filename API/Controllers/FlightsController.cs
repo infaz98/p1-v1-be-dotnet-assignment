@@ -22,6 +22,12 @@ public class FlightsController : ControllerBase
         _mediator = mediator;
     }
 
+    /// <summary>
+    /// returns the flight details for flights going to a specific destination, 
+    /// sorted by lowest available price and limited to a specific page size with a specified offset.
+    /// </summary>
+    /// <param name="searchFilter"></param>
+    /// <returns></returns>
     [HttpGet]
     [Route("Search")]
     public async Task<IActionResult> GetAvailableFlights([FromQuery] SearchFilter searchFilter)
