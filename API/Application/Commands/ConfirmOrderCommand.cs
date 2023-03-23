@@ -1,11 +1,10 @@
-﻿using API.ApiResponses;
-using Domain.Aggregates.FlightAggregate;
+﻿using Domain.Aggregates.OrderAggregate;
 using MediatR;
 using System;
 
 namespace API.Application.Commands
 {
-    public class ConfirmOrderCommand : IRequest<bool>
+    public class ConfirmOrderCommand : IRequest<Order>
     {
         public int CustomerId { get; set; }
         public Guid OrderId { get; set; }

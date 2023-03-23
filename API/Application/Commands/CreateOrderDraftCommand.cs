@@ -4,7 +4,7 @@ using System;
 
 namespace API.Application.Commands
 {
-    public class CreateOrderDraftCommand : IRequest<bool>
+    public class CreateOrderDraftCommand : IRequest<Order>
     {
         public int CustomerId { get; private set; }
         public Guid FlightRateId { get; private set; }

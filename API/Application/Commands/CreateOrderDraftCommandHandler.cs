@@ -9,15 +9,20 @@ using System.Threading.Tasks;
 
 namespace API.Application.Commands
 {
-    public class CreateOrderDraftCommandHandler : IRequestHandler<CreateOrderDraftCommand, bool>
+    public class CreateOrderDraftCommandHandler : IRequestHandler<CreateOrderDraftCommand, Order>
     {
+        private readonly IOrderRepository _orderRepository;
         private readonly IFlightRepository _flightRepository;
-
-        public CreateOrderDraftCommandHandler(IFlightRepository flightRepository)
+        
+        public CreateOrderDraftCommandHandler(
+            IFlightRepository flightRepository,
+            IOrderRepository orderRepository
+            )
         {
+            _orderRepository = orderRepository;
             _flightRepository = flightRepository;
         }
-        public async Task<bool> Handle(CreateOrderDraftCommand request, CancellationToken cancellationToken)
+        public async Task<Order> Handle(CreateOrderDraftCommand request, CancellationToken cancellationToken)
         {
             var flight = await _flightRepository.GetByFlightRateId(request.FlightRateId);
 
@@ -27,9 +32,17 @@ namespace API.Application.Commands
             }
 
             var flightRate = flight.Rates.FirstOrDefault(x => x.Id == request.FlightRateId);
+           
+            if (flightRate == null)
+            {
+                throw new ArgumentException("Unable to find the Flight Rate");
+            }
 
-            flight.AddDomainEvent(new FlightBookingEvent(request.CustomerId, flightRate.Id, flightRate.Price.Value, request.Quantity));
-            return await _flightRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+            var order = new Order(request.CustomerId, flightRate.Id, flightRate.Price.Value, request.Quantity);
+            _orderRepository.Add(order);
+             
+            await _flightRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+            return order;
         }
     }
 }

@@ -30,6 +30,22 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Title = "AcmeFlights API";
+                    document.Info.Description = "<li>A simple filght booking API implemented using DDD </li>" +
+                    "<li> Application logs are captured using Serilog, Seq and available at - <a href=\"http://localhost:9000 \" target=\"_blank\">http://localhost:9000 </a></li>" +
+                    "<li>High level design and assumtions made for the implementation are available at - - <a href=\"http://localhost:9000 \" target=\"_blank\">http://localhost:9000 </a></li><br>";
+                    document.Info.Contact = new NSwag.OpenApiContact
+                    {
+                        Name = "Infaz Rumy",
+                        Url = "https://linktr.ee/infazrumy"
+                    };
+                };
+            });
+
             services.AddApiVersioning(options =>
             {
                 options.AssumeDefaultVersionWhenUnspecified = true;
@@ -56,8 +72,6 @@ namespace API
 
             //registering domain assembly for managing domain events 
             services.AddMediatR(typeof(FlightBookingEvent).GetTypeInfo().Assembly);
-
-            services.AddOpenApiDocument(d => d.Title = "AcmeFlights API");
 
             services.AddFlightsContext(
                 Configuration["Database:ConnectionString"],
@@ -87,7 +101,7 @@ namespace API
 
             app.UseRouting();
 
-            app.UseMiddleware<ExceptionHandlingMiddleware>();
+            //app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseAuthorization();
 

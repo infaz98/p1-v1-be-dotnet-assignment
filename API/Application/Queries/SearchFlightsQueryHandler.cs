@@ -42,7 +42,7 @@ namespace API.Application.Queries
                     INNER JOIN public.""Airports"" oac ON f.""OriginAirportId"" = oac.""Id""
                     INNER JOIN public.""Airports"" dac ON f.""DestinationAirportId"" = dac.""Id""
                 WHERE 
-                    a.""Name"" LIKE @DestinationName
+                    a.""Name"" ILIKE @DestinationName
                     AND fr.""Available"" > 0
                 GROUP BY 
                     f.""Id"", 
