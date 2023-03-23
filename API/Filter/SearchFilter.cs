@@ -2,7 +2,7 @@
 {
     public class SearchFilter
     {
-        public string? Pharam { get; set; }
+        public string Pharam { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public SearchFilter()

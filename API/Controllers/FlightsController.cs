@@ -35,7 +35,7 @@ public class FlightsController : ControllerBase
     /// Returns the flight details for flights going to a specific destination,
     /// sorted by lowest available price and limited to a specific page size with a specified offset.
     /// 
-    /// Try out a destination like "Istanbul"
+    /// Try out any destination like "Istanbul, Amsterdam, Munich"
     /// </remarks>
     /// <param name="searchFilter"></param>
     /// <returns></returns>
@@ -120,7 +120,13 @@ public class FlightsController : ControllerBase
         if (order != null)
         {
             var orderDraftResponse = _mapper.Map<DraftOrderResponse>(order);
-            return CreatedAtAction(actionName: nameof(GetCustomerOrders), routeValues: new { customerId = order.CustomerId }, value: orderDraftResponse);
+            return CreatedAtAction(actionName: nameof(GetCustomerOrders), routeValues: new { customerId = order.CustomerId }, value: new BaseResponse()
+            {
+                StatusCode = (int)HttpStatusCode.Created,
+                Message = "Booking create successfully :)",
+                Data = orderDraftResponse
+
+            });
         }
 
         return BadRequest(new BaseResponse()
