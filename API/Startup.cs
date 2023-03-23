@@ -37,7 +37,7 @@ namespace API
                     document.Info.Title = "AcmeFlights API";
                     document.Info.Description = "<li>A simple filght booking API implemented using DDD </li>" +
                     "<li> Application logs are captured using Serilog, Seq and available at - <a href=\"http://localhost:9000 \" target=\"_blank\">http://localhost:9000 </a></li>" +
-                    "<li>High level design and assumtions made for the implementation are available at - - <a href=\"http://localhost:9000 \" target=\"_blank\">http://localhost:9000 </a></li><br>";
+                    "<li>High level design and assumtions made for the implementation are available at - - <a href=\"https://github.com/infaz98/p1-v1-be-dotnet-assignment/blob/feature/flight-booking-engine-infaz/DESIGN-DOCUMENT.md \" target=\"_blank\">Design Document</a></li><br>";
                     document.Info.Contact = new NSwag.OpenApiContact
                     {
                         Name = "Infaz Rumy",
